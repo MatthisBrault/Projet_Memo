@@ -1,0 +1,13 @@
+volumes:
+    dbdata:
+services:
+    db:
+        image: postgres:12.4-alpine # L'image sur laquelle il va taper, qui porte le SGBD - ici PostGreSQL 12.4
+        environment:
+            POSTGRES_USER: root # Le mot de passe utilisateur, on met quasiment toujours root, c'est pour le dev uniquement
+            POSTGRES_PASSWORD: root # Le nom de l'utilisateur, on met quasiment toujours root aussi
+            POSTGRES_DB: siteMemo_db # Le nom de ta base, tu mets ce que tu veux mais plutôt quelque chose qui colle à ton projet, ici memo ça serait pas mal je pense
+        volumes:
+            - dbdata:/var/lib/postgresql/data
+        ports:
+            - '5434:5432'

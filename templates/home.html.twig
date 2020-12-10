@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <div class="container">
+    <!--
+    <div class="jumbotron mt-3">
+      <h1 class="display-5">projet Memo</h1>
+      <p class="lead">retrouvez ici vos tâches et projets en cours.</p>
+    </div>
+-->
+    <div class="row mt-3">
+      <div class="col-md-4">
+        <div class="card bg-light mb-3 text-center">
+          <div class="card-header text-center">
+            Billy
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">taskName : <strong>#{{ idTask }}</strong></h4>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Curabitur semper, ipsum vel euismod ullamcorper, ante odio imperdiet felis, at placerat.
+            </p>
+            <a class="btn btn-secondary" href="#">aller à la tâche</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card bg-light mb-3 text-center">
+          <div class="card-header text-center">
+            Bobby
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">taskName : <strong>#{{ idTask }}</strong></h4>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Curabitur semper, ipsum vel euismod ullamcorper, ante odio imperdiet felis, at placerat.
+            </p>
+            <a class="btn btn-secondary" href="#">aller à la tâche</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}tâches{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3 class="my-3">
+            {{ tasks|length }} Tâches en cours :
+        </h3>
+        <div class="row">
+            {% for task in tasks %}
+                <div class="col-md-4">
+                    <div class="card bg-light mb-3 text-center">
+                        <div class="card-header text-center">
+                            Billy
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ task.name }} : <strong>#{{ task.id }}</strong></h5>
+                            <p class="card-text">
+                                {{ task.content }}
+                            </p>
+                            <a class="btn btn-secondary" href="#">aller à la tâche</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
