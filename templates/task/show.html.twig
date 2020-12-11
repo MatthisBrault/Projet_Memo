@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  {{ task.name }}
+{% endblock %}
+
+
+{% block body %}
+    <div class="container jumbotron mt-3">
+        <div class="row d-flex justify-content-between">
+            <h3>{{ task.name }}</h3>
+            <div class="">crée le {{ task.creationDate|date("d/m/Y") }}</div>
+        </div>
+        <br/>
+        <div class="container">
+            <p class="h5">[Nom des workers]</p>
+            <p>{{ task.content }}</p>
+        </div>
+    </div>
+{% endblock %}

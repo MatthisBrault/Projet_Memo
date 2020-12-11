@@ -14,12 +14,12 @@
                         <div class="card-header text-center">
                             Billy
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="background-color: {{ task.color }}">
                             <h5 class="card-title">{{ task.name }} : <strong>#{{ task.id }}</strong></h5>
                             <p class="card-text">
                                 {{ task.content }}
                             </p>
-                            <a class="btn btn-secondary" href="#">aller à la tâche</a>
+                            <a class="btn btn-secondary" href="tasks/{{ task.slug }}">aller à la tâche</a>
                         </div>
                     </div>
                 </div>

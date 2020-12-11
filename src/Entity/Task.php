@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\TaskRepository;
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,10 +36,6 @@ class Task
      */
     private $expirationDate;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $creator;
 
     /**
      * @ORM\Column(type="integer")
@@ -59,6 +57,33 @@ class Task
      * @ORM\JoinColumn(nullable=false)
      */
     private $project;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Worker::class, mappedBy="tasks")
+     */
+    private $workers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="tasks")
+     */
+    private $tags;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ProjectManager::class, inversedBy="tasks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $creator;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $color;
+
+    public function __construct()
+    {
+        $this->workers = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+    }
 
 
     /**
@@ -113,18 +138,6 @@ class Task
         return $this;
     }
 
-    public function getCreator(): ?int
-    {
-        return $this->creator;
-    }
-
-    public function setCreator(int $creator): self
-    {
-        $this->creator = $creator;
-
-        return $this;
-    }
-
     public function getStatus(): ?int
     {
         return $this->status;
@@ -169,6 +182,84 @@ class Task
     public function setProject(?Project $project): self
     {
         $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Worker[]
+     */
+    public function getWorkers(): Collection
+    {
+        return $this->workers;
+    }
+
+    public function addWorker(Worker $worker): self
+    {
+        if (!$this->workers->contains($worker)) {
+            $this->workers[] = $worker;
+            $worker->addTask($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorker(Worker $worker): self
+    {
+        if ($this->workers->removeElement($worker)) {
+            $worker->removeTask($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+            $tag->addTask($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        if ($this->tags->removeElement($tag)) {
+            $tag->removeTask($this);
+        }
+
+        return $this;
+    }
+
+    public function getCreator(): ?ProjectManager
+    {
+        return $this->creator;
+    }
+
+    public function setCreator(?ProjectManager $creator): self
+    {
+        $this->creator = $creator;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }

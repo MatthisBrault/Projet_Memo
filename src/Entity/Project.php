@@ -50,13 +50,21 @@ class Project
     private $tasks;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=ProjectManager::class, inversedBy="projects")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $creator;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Worker::class, mappedBy="projects")
+     */
+    private $workers;
+
 
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
+        $this->workers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,14 +162,41 @@ class Project
         return $this;
     }
 
-    public function getCreator(): ?int
+    public function getCreator(): ?ProjectManager
     {
         return $this->creator;
     }
 
-    public function setCreator(int $creator): self
+    public function setCreator(?ProjectManager $creator): self
     {
         $this->creator = $creator;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Worker[]
+     */
+    public function getWorkers(): Collection
+    {
+        return $this->workers;
+    }
+
+    public function addWorker(Worker $worker): self
+    {
+        if (!$this->workers->contains($worker)) {
+            $this->workers[] = $worker;
+            $worker->addProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorker(Worker $worker): self
+    {
+        if ($this->workers->removeElement($worker)) {
+            $worker->removeProject($this);
+        }
 
         return $this;
     }
